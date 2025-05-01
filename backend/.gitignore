@@ -1,0 +1,58 @@
+# --- Node.js ---
+
+# Dependencies cache and installed packages
+# Yeh folder install ki hui saari libraries rakhta hai. Bahut bada hota hai aur
+# 'npm install' se dobara generate ho sakta hai. Isko HAMESHA ignore karein.
+node_modules/
+
+# Logs
+# Application ya npm ke debug logs ko ignore karein.
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment variables
+# Is file mein API keys, database passwords jaise secrets hote hain.
+# Security ke liye isko KABHI BHI commit na karein.
+# Aksar ek .env.example file commit ki jaati hai template ke taur par.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+# Lekin .env.example ko ignore na karein (agar aap use karte hain)
+# !.env.example
+
+# Build output directories
+# Agar aap TypeScript use karte hain ya code ko bundle/build karte hain,
+# toh output folders (jaise 'dist' ya 'build') ko ignore karein.
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+
+# OS generated files
+# Operating System ke temporary/system files.
+.DS_Store
+Thumbs.db
+
+# Optional IDE/Editor configuration files
+# Agar team mein sab same editor use nahi karte, ya personal settings save nahi karna chahte.
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Optional dependency lock files (if using multiple package managers, which is rare)
+# yarn.lock # Agar sirf npm use kar rahe hain
+# package-lock.json # Agar sirf yarn use kar rahe hain
+# pnpm-lock.yaml # Agar sirf npm/yarn use kar rahe hain
