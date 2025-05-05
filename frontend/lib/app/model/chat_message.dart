@@ -1,4 +1,3 @@
-// models/chat_message.dart
 
 class ChatMessage {
   final String text;

@@ -2,8 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:frontend/app/chat/provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class ChatScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
+
+  // --- Helper function to launch URLs ---
+  Future<void> _launchURL(Uri url) async {
+    // Check if the URL can be launched (good practice)
+    if (await canLaunchUrl(url)) {
+      // Try launching the URL
+      bool launched = await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      ); // Open externally
+      if (!launched) {
+        print('Could not launch $url');
+        // Optionally show a snackbar or message to the user
+      }
+    } else {
+      print('Could not launch $url');
+      // Optionally show a snackbar or message to the user
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +38,47 @@ class ChatScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemCount: chatProvider.messages.length,
+              reverse: true,
               itemBuilder: (_, index) {
-                final msg = chatProvider.messages[index];
+                // Access messages in reverse for display order
+                final msg =
+                    chatProvider.messages[chatProvider.messages.length -
+                        1 -
+                        index];
                 return Container(
-                  alignment: msg.isUser ? Alignment.centerRight : Alignment.centerLeft,
-                  padding: EdgeInsets.all(8),
+                  alignment:
+                      msg.isUser ? Alignment.centerRight : Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Container(
                     decoration: BoxDecoration(
                       color: msg.isUser ? Colors.blue[100] : Colors.grey[200],
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     padding: EdgeInsets.all(12),
-                    child: Text(msg.text),
+                    child: SelectableRegion(
+                      // <-- Wrap the bubble
+                      focusNode: FocusNode(), // Required
+                      selectionControls:
+                          MaterialTextSelectionControls(), // Use default controls
+                      child: Container(
+                        // Your existing message bubble container
+                        decoration: BoxDecoration(
+                          color:
+                              msg.isUser ? Colors.blue[100] : Colors.grey[200],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: EdgeInsets.all(12),
+                        child: Linkify(
+                          // Use normal Linkify inside
+                          onOpen: (link) async {
+                            final Uri urlToLaunch = Uri.parse(link.url);
+                            await _launchURL(urlToLaunch);
+                          },
+                          text: msg.text,
+                     
+                        ),
+                      ),
+                    ),
                   ),
                 );
               },
