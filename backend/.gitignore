@@ -41,7 +41,7 @@ coverage/
 # Operating System ke temporary/system files.
 .DS_Store
 Thumbs.db
-
+downloaded-service-account-key.json
 # Optional IDE/Editor configuration files
 # Agar team mein sab same editor use nahi karte, ya personal settings save nahi karna chahte.
 .idea/
