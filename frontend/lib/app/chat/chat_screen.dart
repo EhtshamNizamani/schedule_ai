@@ -67,7 +67,7 @@ class ChatScreen extends StatelessWidget {
                               msg.isUser ? Colors.blue[100] : Colors.grey[200],
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        padding: EdgeInsets.all(12),
+                        padding: EdgeInsets.symmetric(horizontal:6,vertical: 0),
                         child: Linkify(
                           // Use normal Linkify inside
                           onOpen: (link) async {
